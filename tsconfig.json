@@ -15,7 +15,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@users/ui/layout": ["libs/ui/layout/src/index.ts"],
+      "@users/feature/users": ["libs/feature/users/src/index.ts"],
+      "@users/data-access": ["libs/data-access/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

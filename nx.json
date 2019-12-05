@@ -13,6 +13,15 @@
     },
     "users-admin": {
       "tags": []
+    },
+    "ui-layout": {
+      "tags": []
+    },
+    "feature-users": {
+      "tags": []
+    },
+    "data-access": {
+      "tags": []
     }
   }
 }
