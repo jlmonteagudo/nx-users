@@ -21,7 +21,6 @@ export class UsersListComponent implements AfterViewInit, OnInit {
 
   searchField = new FormControl();
   dataSource: UsersListDataSource;
-
   displayedColumns: string[] = ['id', 'name', 'username', 'email', 'phone', 'website'];
 
   constructor(private userService: UsersService) {}

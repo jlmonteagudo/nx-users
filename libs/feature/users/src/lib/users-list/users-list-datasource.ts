@@ -7,12 +7,12 @@ import { User, UsersService, PaginatedData, UserQuery } from '@users/data-access
 
 export class UsersListDataSource extends DataSource<User> {
 
-  private count = 0;
-  private isLoading = false;
-
   paginator: MatPaginator;
   sort: MatSort;
   filterByName: Observable<string>;
+
+  count = 0;
+  isLoading = false;
 
   constructor(private usersService: UsersService) {
     super();
@@ -23,7 +23,10 @@ export class UsersListDataSource extends DataSource<User> {
     const dataMutations = [
       this.paginator.page.pipe(startWith(null)),
       this.sort.sortChange.pipe(startWith(null)),
-      this.filterByName.pipe(startWith(''))
+      this.filterByName.pipe(
+        startWith(''),
+        tap(() => this.paginator.pageIndex = 0)
+      )
     ];
 
     return combineLatest(dataMutations).pipe(
