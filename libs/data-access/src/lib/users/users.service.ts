@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DataAccessOptions } from '../data-access.options';
-import { User } from './user';
+import { User, UserQuery } from './user';
 import { PaginatedData } from '../common/paginated-data';
 
 @Injectable({
@@ -21,16 +21,20 @@ export class UsersService {
     return this.http.get<User[]>(this.URL_BASE);
   }
 
-  findPaginated(pageNumber: number, limit: number, sort: string, direction: string): Observable<PaginatedData<User>> {
+  findPaginated(query: UserQuery): Observable<PaginatedData<User>> {
 
     let params: HttpParams = new HttpParams()
-      .set('_page', pageNumber.toString())
-      .set('_limit', limit.toString());
+      .set('_page', query.pageIndex.toString())
+      .set('_limit', query.pageSize.toString());
 
-    if (direction) {
+    if (query.sortDirection) {
       params = params
-        .append('_sort', sort)
-        .append('_order', direction);
+        .append('_sort', query.sortField)
+        .append('_order', query.sortDirection);
+    }
+
+    if (query.filter) {
+      params = params.append('name_like', query.filter);
     }
 
     return this.http.get<User[]>(this.URL_BASE, { observe: 'response', params }).pipe(

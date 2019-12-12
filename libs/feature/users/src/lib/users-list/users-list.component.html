@@ -1,53 +1,56 @@
 <h3>USERS LIST</h3>
 
-<ng-container *ngIf="users$ | async as users">
+<mat-form-field>
+  <input matInput placeholder="Filter by name" [formControl]="searchField">
+</mat-form-field>
 
-  <div class="mat-elevation-z8">
+<div class="mat-elevation-z8">
 
-    <table mat-table [dataSource]="users.data" matSort (matSortChange)="onSortChange($event)" [matSortActive]="sortField" [matSortDirection]="sortDirection">
-
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="username">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
-        <td mat-cell *matCellDef="let element"> {{element.username}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="phone">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
-        <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="website">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Website </th>
-        <td mat-cell *matCellDef="let element"> {{element.website}} </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-    </table>
-
-    <mat-paginator [length]="users.count"
-                  [pageSize]="pageSize"
-                  [pageIndex]="pageIndex"
-                  [pageSizeOptions]="[5, 10, 25, 100]"
-                  (page)="onPage($event)">
-    </mat-paginator>
-
+  <div class="loading-shade" *ngIf="dataSource.isLoading">
+    <mat-spinner></mat-spinner>
   </div>
 
-</ng-container>
+  <table mat-table class="full-width-table" matSort aria-label="Elements">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+      <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
+      <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="website">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Website </th>
+      <td mat-cell *matCellDef="let element"> {{element.website}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  <mat-paginator #paginator
+      [length]="dataSource.count"
+      [pageIndex]="paginator.pageIndex"
+      [pageSize]="paginator.pageSize"
+      [pageSizeOptions]="[5, 10, 25, 50, 100]">
+  </mat-paginator>
+</div>

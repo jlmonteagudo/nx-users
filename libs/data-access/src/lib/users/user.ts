@@ -27,3 +27,11 @@ export interface User {
   website: string;
   company: Company;
 }
+
+export interface UserQuery {
+  filter: string;
+  pageIndex: number;
+  pageSize: number;
+  sortField: string;
+  sortDirection: string;
+}

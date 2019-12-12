@@ -1,11 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
-import { UsersService, User, PaginatedData } from '@users/data-access';
-import { Observable } from 'rxjs';
-import { PageEvent } from '@angular/material/paginator';
+import { AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-
-const DEFAULT_PAGE_INDEX = 0;
-const DEFAULT_PAGE_SIZE = 5;
+import { MatTable } from '@angular/material/table';
+import { UsersListDataSource } from './users-list-datasource';
+import { User, UsersService } from '@users/data-access';
+import { debounceTime } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-users-list',
@@ -13,39 +13,28 @@ const DEFAULT_PAGE_SIZE = 5;
   styleUrls: ['./users-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UsersListComponent implements OnInit  {
+export class UsersListComponent implements AfterViewInit, OnInit {
 
-  users$: Observable<PaginatedData<User>>;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatTable, {static: false}) table: MatTable<User>;
+
+  searchField = new FormControl();
+  dataSource: UsersListDataSource;
+
   displayedColumns: string[] = ['id', 'name', 'username', 'email', 'phone', 'website'];
 
-  pageIndex = DEFAULT_PAGE_INDEX;
-  pageSize = DEFAULT_PAGE_SIZE;
-  sortField: string;
-  sortDirection: string;
-
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-
-
-  constructor(private usersService: UsersService) { }
+  constructor(private userService: UsersService) {}
 
   ngOnInit() {
-    this.loadData();
+    this.dataSource = new UsersListDataSource(this.userService);
   }
 
-  loadData() {
-    this.users$ = this.usersService.findPaginated(this.pageIndex + 1 , this.pageSize, this.sortField, this.sortDirection);
-  }
-
-  onPage($event: PageEvent) {
-    this.pageIndex = $event.pageIndex;
-    this.pageSize = $event.pageSize;
-    this.loadData();
-  }
-
-  onSortChange($event) {
-    this.sortField = $event.active;
-    this.sortDirection = $event.direction;
-    this.loadData();
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.filterByName = this.searchField.valueChanges.pipe(debounceTime(300));
+    this.table.dataSource = this.dataSource;
   }
 
 }
