@@ -22,6 +22,9 @@
     },
     "data-access": {
       "tags": []
+    },
+    "ui-components": {
+      "tags": []
     }
   }
 }

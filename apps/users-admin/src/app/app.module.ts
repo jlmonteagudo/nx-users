@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { UiLayoutModule } from '@users/ui/layout';
 import { DataAccessModule } from '@users/data-access';
 import { environment } from '../environments/environment';
+import { UiComponentsModule } from '@users/ui/components';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { environment } from '../environments/environment';
     LayoutModule,
     AppRoutingModule,
     UiLayoutModule,
+    UiComponentsModule,
     DataAccessModule.forRoot({ apiBaseUrl: environment.apiBaseUrl })
   ],
   providers: [],
