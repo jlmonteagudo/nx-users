@@ -1,0 +1,81 @@
+<form [formGroup]="userForm" novalidate (ngSubmit)="onSubmit()">
+
+  <!-- USERNAME -->
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+        <input matInput #username maxlength="15" placeholder="Username" formControlName="username" required>
+        <mat-hint align="end">{{username.value.length}} / 15</mat-hint>
+        <mat-error *ngIf="userForm.controls['username'].hasError('required')">
+          Username is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- NAME -->
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+        <input matInput #name maxlength="150" placeholder="Name" formControlName="name" required>
+        <mat-hint align="end">{{name.value.length}} / 150</mat-hint>
+        <mat-error *ngIf="userForm.controls['name'].hasError('required')">
+          Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- EMAIL -->
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+        <input matInput #email maxlength="30" placeholder="Email" formControlName="email">
+        <mat-hint align="end">{{email.value.length}} / 30</mat-hint>
+        <mat-error *ngIf="userForm.controls['email'].hasError('email')">
+          Not a valid email
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- PHONE -->
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+        <input matInput #phone maxlength="30" placeholder="Phone" formControlName="phone">
+        <mat-hint align="end">{{phone.value.length}} / 30</mat-hint>
+        <mat-error *ngIf="userForm.controls['phone'].hasError('pattern')">
+            Not a valid phone
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- WEBSITE -->
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+        <input matInput #website maxlength="250" placeholder="Website" formControlName="website">
+        <mat-hint align="end">{{website.value.length}} / 250</mat-hint>
+        <mat-error *ngIf="userForm.controls['website'].hasError('pattern')">
+            Not a valid website
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="row form-actions">
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">
+      <mat-icon>save</mat-icon> SAVE
+    </button>
+
+    <button mat-raised-button color="warn" type="button" [routerLink]="['/users']">
+      <mat-icon>cancel</mat-icon> CANCEL
+    </button>
+
+  </div>
+
+</form>

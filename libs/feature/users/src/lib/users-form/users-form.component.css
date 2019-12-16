@@ -1,0 +1,16 @@
+.full-width {
+  width: 100%;
+}
+
+.form-actions {
+  margin-top: 20px;
+}
+
+.form-actions button{
+  margin-right: 10px;
+}
+
+h4 {
+  margin-left: 16px !important;
+  font-weight: 500;
+}

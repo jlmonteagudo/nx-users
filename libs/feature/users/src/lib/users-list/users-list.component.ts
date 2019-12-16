@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy, ElementRef, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
@@ -7,6 +7,7 @@ import { debounceTime } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { User, UsersService } from '@users/data-access';
 import { AppSnackbarService } from '@users/ui/components';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-users-list',
@@ -22,12 +23,15 @@ export class UsersListComponent implements AfterViewInit, OnInit {
 
   searchField = new FormControl();
   dataSource: UsersListDataSource;
-  displayedColumns: string[] = ['id', 'name', 'username', 'email', 'phone', 'website'];
+  displayedColumns: string[] = ['id', 'name', 'username', 'email', 'phone', 'website', 'actions'];
 
-  constructor(private userService: UsersService, private appSnackbarService: AppSnackbarService) {}
+  constructor(private usersService: UsersService,
+              private appSnackbarService: AppSnackbarService,
+              private route: ActivatedRoute,
+              private router: Router) {}
 
   ngOnInit() {
-    this.dataSource = new UsersListDataSource(this.userService, this.appSnackbarService);
+    this.dataSource = new UsersListDataSource(this.usersService, this.appSnackbarService);
   }
 
   ngAfterViewInit() {
@@ -35,6 +39,19 @@ export class UsersListComponent implements AfterViewInit, OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.filterByName = this.searchField.valueChanges.pipe(debounceTime(300));
     this.table.dataSource = this.dataSource;
+  }
+
+  onEdit(user: User) {
+    this.router.navigate(['edit', user.id], {relativeTo: this.route});
+  }
+
+  onDelete(user: User) {
+
+    this.usersService.delete('' + user.id).subscribe(
+      () => this.appSnackbarService.info('User has been deleted'),
+      (error => this.appSnackbarService.error(`Error deleting the user`))
+    );
+
   }
 
 }

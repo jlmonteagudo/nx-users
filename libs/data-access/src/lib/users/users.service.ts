@@ -17,6 +17,10 @@ export class UsersService {
     this.URL_BASE = `${options.apiBaseUrl}/users`;
   }
 
+  findOne(id: string): Observable<User> {
+    return this.http.get<User>(`${this.URL_BASE}/${id}`);
+  }
+
   find(): Observable<User[]> {
     return this.http.get<User[]>(this.URL_BASE);
   }
@@ -41,6 +45,18 @@ export class UsersService {
       map((resp: HttpResponse<User[]>) => ({ count: +resp.headers.get('x-total-count'), data: resp.body }))
     );
 
+  }
+
+  insert(user: User): Observable<User> {
+    return this.http.post<User>(this.URL_BASE, user);
+  }
+
+  update(user: User): Observable<User> {
+    return this.http.put<User>(`${this.URL_BASE}/${user.id}`, user);
+  }
+
+  delete(id: string): Observable<User> {
+    return this.http.delete<User>(`${this.URL_BASE}/${id}`);
   }
 
 }
