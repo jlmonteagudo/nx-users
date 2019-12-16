@@ -6,8 +6,9 @@ import { UsersListDataSource } from './users-list-datasource';
 import { debounceTime } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { User, UsersService } from '@users/data-access';
-import { AppSnackbarService } from '@users/ui/components';
+import { AppSnackbarService, AppConfirmationDialogComponent } from '@users/ui/components';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-users-list',
@@ -28,7 +29,8 @@ export class UsersListComponent implements AfterViewInit, OnInit {
   constructor(private usersService: UsersService,
               private appSnackbarService: AppSnackbarService,
               private route: ActivatedRoute,
-              private router: Router) {}
+              private router: Router,
+              private dialog: MatDialog) {}
 
   ngOnInit() {
     this.dataSource = new UsersListDataSource(this.usersService, this.appSnackbarService);
@@ -47,11 +49,21 @@ export class UsersListComponent implements AfterViewInit, OnInit {
 
   onDelete(user: User) {
 
+    const dialogRef = this.dialog.open(AppConfirmationDialogComponent, {
+      data: 'Do you confirm the deletion of the article?'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) { this.deleteArticle(user); }
+    });
+
+  }
+
+  deleteArticle(user: User) {
     this.usersService.delete('' + user.id).subscribe(
       () => this.appSnackbarService.info('User has been deleted'),
       (error => this.appSnackbarService.error(`Error deleting the user`))
     );
-
   }
 
 }
