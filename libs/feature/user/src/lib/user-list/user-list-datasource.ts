@@ -3,10 +3,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map, switchMap, startWith, tap, catchError } from 'rxjs/operators';
 import { Observable, combineLatest, of } from 'rxjs';
-import { User, UsersService, PaginatedData, UserQuery } from '@users/data-access';
+import { User, UserService, PaginatedData, UserQuery } from '@users/data-access';
 import { AppSnackbarService } from '@users/ui/components';
 
-export class UsersListDataSource extends DataSource<User> {
+export class UserListDataSource extends DataSource<User> {
 
   paginator: MatPaginator;
   sort: MatSort;
@@ -15,7 +15,7 @@ export class UsersListDataSource extends DataSource<User> {
   count = 0;
   isLoading = false;
 
-  constructor(private usersService: UsersService, private appSnackbarService: AppSnackbarService) {
+  constructor(private userService: UserService, private appSnackbarService: AppSnackbarService) {
     super();
   }
 
@@ -54,7 +54,7 @@ export class UsersListDataSource extends DataSource<User> {
       sortDirection: this.sort.direction
     }
 
-    return this.usersService.findPaginated(query).pipe(
+    return this.userService.findPaginated(query).pipe(
       catchError(this.handleError.bind(this))
     );
 

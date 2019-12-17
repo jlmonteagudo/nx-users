@@ -2,38 +2,38 @@ import { AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy, E
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
-import { UsersListDataSource } from './users-list-datasource';
 import { debounceTime } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
-import { User, UsersService } from '@users/data-access';
+import { User, UserService } from '@users/data-access';
+import { UserListDataSource } from './user-list-datasource';
 import { AppSnackbarService, AppConfirmationDialogComponent } from '@users/ui/components';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-users-list',
-  templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.css'],
+  selector: 'app-user-list',
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UsersListComponent implements AfterViewInit, OnInit {
+export class UserListComponent implements AfterViewInit, OnInit {
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   @ViewChild(MatTable, {static: false}) table: MatTable<User>;
 
   searchField = new FormControl();
-  dataSource: UsersListDataSource;
+  dataSource: UserListDataSource;
   displayedColumns: string[] = ['id', 'name', 'username', 'email', 'phone', 'website', 'actions'];
 
-  constructor(private usersService: UsersService,
+  constructor(private userService: UserService,
               private appSnackbarService: AppSnackbarService,
               private route: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog) {}
 
   ngOnInit() {
-    this.dataSource = new UsersListDataSource(this.usersService, this.appSnackbarService);
+    this.dataSource = new UserListDataSource(this.userService, this.appSnackbarService);
   }
 
   ngAfterViewInit() {
@@ -60,7 +60,7 @@ export class UsersListComponent implements AfterViewInit, OnInit {
   }
 
   deleteArticle(user: User) {
-    this.usersService.delete('' + user.id).subscribe(
+    this.userService.delete('' + user.id).subscribe(
       () => this.appSnackbarService.info('User has been deleted'),
       (error => this.appSnackbarService.error(`Error deleting the user`))
     );

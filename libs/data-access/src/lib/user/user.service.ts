@@ -9,7 +9,7 @@ import { PaginatedData } from '../common/paginated-data';
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
+export class UserService {
 
   private URL_BASE: string;
 

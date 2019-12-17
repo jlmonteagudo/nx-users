@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsersService, User } from '@users/data-access';
+import { UserService, User } from '@users/data-access';
 import { AppSnackbarService } from '@users/ui/components';
 
 @Component({
-  selector: 'app-users-edit',
-  templateUrl: './users-edit.component.html',
-  styleUrls: ['./users-edit.component.css']
+  selector: 'app-user-edit',
+  templateUrl: './user-edit.component.html',
+  styleUrls: ['./user-edit.component.css']
 })
-export class UsersEditComponent implements OnInit {
+export class UserEditComponent implements OnInit {
 
   user: User;
 
-  constructor(private usersService: UsersService,
+  constructor(private userService: UserService,
               private route: ActivatedRoute,
               private router: Router,
               private appSnackbarService: AppSnackbarService) {}
@@ -26,7 +26,7 @@ export class UsersEditComponent implements OnInit {
   onSave(updatedUser: User) {
 
     updatedUser.id = this.user.id;
-    this.usersService.update(updatedUser).subscribe(
+    this.userService.update(updatedUser).subscribe(
       () => {
         this.appSnackbarService.info('User has been updated');
         this.router.navigate(['/users']);

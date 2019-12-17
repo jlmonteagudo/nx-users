@@ -3,11 +3,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from '@users/data-access';
 
 @Component({
-  selector: 'app-users-form',
-  templateUrl: './users-form.component.html',
-  styleUrls: ['./users-form.component.css']
+  selector: 'app-user-form',
+  templateUrl: './user-form.component.html',
+  styleUrls: ['./user-form.component.css']
 })
-export class UsersFormComponent implements OnInit {
+export class UserFormComponent implements OnInit {
 
   @Input() user: User;
   @Output() save: EventEmitter<User> = new EventEmitter<User>();

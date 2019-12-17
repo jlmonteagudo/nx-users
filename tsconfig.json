@@ -17,7 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@users/ui/layout": ["libs/ui/layout/src/index.ts"],
-      "@users/feature/users": ["libs/feature/users/src/index.ts"],
+      "@users/feature/user": ["libs/feature/user/src/index.ts"],
       "@users/data-access": ["libs/data-access/src/index.ts"],
       "@users/ui/components": ["libs/ui/components/src/index.ts"]
     }

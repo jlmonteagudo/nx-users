@@ -3,19 +3,19 @@ import { Resolve, ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@a
 import { Observable, of, EMPTY } from 'rxjs';
 import { take, mergeMap } from 'rxjs/operators';
 import { User } from './user';
-import { UsersService } from './users.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserResolver implements Resolve<User> {
 
-  constructor(private usersService: UsersService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> | Observable<never> {
     const id = route.paramMap.get('id');
 
-    return this.usersService.findOne(id).pipe(
+    return this.userService.findOne(id).pipe(
       take(1),
       mergeMap(user => {
         if (user) {

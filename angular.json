@@ -148,9 +148,9 @@
         }
       }
     },
-    "feature-users": {
-      "root": "libs/feature/users",
-      "sourceRoot": "libs/feature/users/src",
+    "feature-user": {
+      "root": "libs/feature/user",
+      "sourceRoot": "libs/feature/user/src",
       "projectType": "library",
       "schematics": {},
       "architect": {
@@ -158,17 +158,17 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/feature/users/tsconfig.lib.json",
-              "libs/feature/users/tsconfig.spec.json"
+              "libs/feature/user/tsconfig.lib.json",
+              "libs/feature/user/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/feature/users/**"]
+            "exclude": ["**/node_modules/**", "!libs/feature/user/**"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/feature/users/jest.config.js",
-            "tsConfig": "libs/feature/users/tsconfig.spec.json"
+            "jestConfig": "libs/feature/user/jest.config.js",
+            "tsConfig": "libs/feature/user/tsconfig.spec.json"
           }
         }
       }

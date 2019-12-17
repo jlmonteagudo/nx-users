@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { UsersListComponent } from './users-list/users-list.component';
-import { UsersNewComponent } from './users-new/users-new.component';
-import { UsersEditComponent } from './users-edit/users-edit.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { UserNewComponent } from './user-new/user-new.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 import { UserResolver } from '@users/data-access';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: UsersListComponent
+    component: UserListComponent
   },
   {
     path: 'new',
-    component: UsersNewComponent
+    component: UserNewComponent
   },
   {
     path: 'edit/:id',
-    component: UsersEditComponent,
+    component: UserEditComponent,
     resolve: {
       user: UserResolver
     }
@@ -28,4 +28,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class UsersRoutingModule { }
+export class UserRoutingModule { }
