@@ -18,9 +18,9 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class UserListComponent implements AfterViewInit, OnInit {
 
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
-  @ViewChild(MatTable, {static: false}) table: MatTable<User>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatTable) table: MatTable<User>;
 
   searchField = new FormControl();
   dataSource: UserListDataSource;

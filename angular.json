@@ -16,7 +16,7 @@
             "main": "apps/users-admin/src/main.ts",
             "polyfills": "apps/users-admin/src/polyfills.ts",
             "tsConfig": "apps/users-admin/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/users-admin/src/favicon.ico",
               "apps/users-admin/src/assets"
@@ -40,7 +40,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
